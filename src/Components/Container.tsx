@@ -10,6 +10,7 @@ const StyledContainer = styled.div`
   flex-direction: column;
   width: 100%;
   align-items: center;
+  margin: 20px 0;
 `
 const Container = ({children}: Props) => {
   return (
