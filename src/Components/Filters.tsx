@@ -5,7 +5,7 @@ import Input from "./Input"
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 52%;
+  width: 770px;
   margin-bottom: 20px;
 `
 

@@ -41,12 +41,13 @@ const StyledTableRow = styled.tr<{ activeColors?: boolean}>`
 
 const UserTable = () => {
   const query = useQuery({
-    queryKey: ['getRandomUsers', 15],
+    queryKey: ['getRandomUsers', 10],
     queryFn: ({queryKey}) => getRandomUsers(queryKey[1])
   })
   const { status, isLoading, isSuccess, isError, error, data } = query;
   const [colorState, setColorState] = useState(false)
   const [ users, setUsers ] = useState<User[]>([])
+  const initialData = data && data.results
   const [ isSorted, setIsSorted ] = useState(false)
 
   const handleColorState = () => {
@@ -57,8 +58,8 @@ const UserTable = () => {
     setIsSorted(prevState => !prevState)
   }
 
-  const updateUsers = () => {
-    const sortedUsers = [...users].sort((a, b) => {
+  const sort = (data: User[]) => {
+    return data.sort((a, b) => {
       if (a.location.country < b.location.country) {
         return -1;
       }
@@ -67,8 +68,23 @@ const UserTable = () => {
       }
       return 0;
     });
+  }
+
+  const updateUsers = () => {
+    const sortedUsers = sort([...users])
     const updatedUsers = isSorted ? sortedUsers : data?.results
     setUsers(updatedUsers)
+  }
+
+  const handleDelete = (idName: string, idValue: string) => {
+    const deletedUser = [...users].filter((user) => {
+      return (user.id.name !== idName || user.id.value !== idValue)
+    })
+    setUsers(deletedUser)
+  }
+
+  const handleReset = () => {
+    isSorted ? setUsers(sort(initialData)) : setUsers(initialData)
   }
 
   useEffect(() => {
@@ -82,7 +98,7 @@ const UserTable = () => {
 
   return (
     <Container>
-      <Filters colorRowsAction={() => handleColorState()} sortByCountryAction={() => handleSortByCountry()} resetAction={() => {}} />
+      <Filters colorRowsAction={() => handleColorState()} sortByCountryAction={() => handleSortByCountry()} resetAction={() => handleReset()} />
       {isError && <h1>Error</h1>}
       {isLoading && <h3>Loading...</h3>}
       {
@@ -105,7 +121,7 @@ const UserTable = () => {
               <StyledTableData>{item.name.last}</StyledTableData>
               <StyledTableData>{item.location.country}</StyledTableData>
               <StyledTableData>
-                <Button title='Delete' onClick={() =>{}} />
+                <Button title='Delete' onClick={() => handleDelete(item.id.name, item.id.value)} />
               </StyledTableData>
             </StyledTableRow>
           )}

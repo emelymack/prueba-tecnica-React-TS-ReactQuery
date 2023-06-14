@@ -1,6 +1,7 @@
 export interface User {
   id: {
-    name: string
+    name: string,
+    value: string
   }
   name: {
     first: string,
