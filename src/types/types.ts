@@ -11,6 +11,7 @@ export interface User {
     country: string
   },
   picture: {
-    thumbnail: string
+    thumbnail: string,
+    medium: string
   }
 }

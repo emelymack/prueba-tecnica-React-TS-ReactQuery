@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from 'react-query'
-import UserTable from './Components/UserTable'
+import UserTable from './Components/UserTable/UserTable'
 import Title from './Components/Title'
 import Container from './Components/Container'
 

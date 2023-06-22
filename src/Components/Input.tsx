@@ -21,11 +21,12 @@ interface Props {
   name: string,
   value: string,
   type: string,
-  placeholder: string
+  placeholder: string,
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
-const Input = ({id, name, value, type, placeholder}: Props) => {
+const Input = ({id, name, value, type, placeholder, onChange}: Props) => {
   return (
-    <StyledInput name={name} id={id} value={value} type={type} placeholder={placeholder} />
+    <StyledInput name={name} id={id} value={value} type={type} placeholder={placeholder} onChange={onChange} />
   )
 }
 
