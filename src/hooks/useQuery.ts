@@ -1,5 +1,4 @@
 import { useQuery } from 'react-query'
-import { useState, useEffect } from 'react'
 import { getRandomUsers } from '../hooks/hooks';
 
 const query = useQuery({
